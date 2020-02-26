@@ -11,9 +11,6 @@ Invoke-WebRequest -Uri http://internal.beanchat.tk:82/chat.txt -OutFile C:\beanc
 $recentmessages1 = (gc C:\beanchat\chat.txt | select-object -last 16) | Out-String
 $Label1.text                     = "$recentmessages1"
 
-# clean up  
-$getData.dispose() 
-
 }
 
 #$beanusername = "gamer"
@@ -234,7 +231,7 @@ C:/beanchat/send.bat
 function join {
 $leavemessage = " has joined the chat."
 $messagetosend = "$Env:beanchatusername$leavemessage"
-C:/beanchat/recieve.bat
+Invoke-WebRequest -Uri http://internal.beanchat.tk:82/chat.txt -OutFile C:\beanchat\chat.txt
 $oldmessage = (gc C:\beanchat\chat.txt | select-object -last 40) | Out-String
 $path = "C:\beanchat\chat.txt"
 $outputfile = "$oldmessage$messagetosend"
