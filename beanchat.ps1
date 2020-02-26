@@ -6,14 +6,8 @@ function startTimer() {
 
 }
 function refreshtext {
-
-# create a new pipeline  
-$getData = [powershell]::create()  
-# add a command (returns Command object)  
-[void] $getData.AddScript("C:/beanchat/recieve.bat")  
-
-
-$getData.Invoke()
+ 
+Invoke-WebRequest -Uri http://internal.beanchat.tk:82/chat.txt -OutFile C:\beanchat\chat.txt
 $recentmessages1 = (gc C:\beanchat\chat.txt | select-object -last 16) | Out-String
 $Label1.text                     = "$recentmessages1"
 
@@ -26,7 +20,7 @@ $getData.dispose()
 # a test comment
 [System.Windows.Forms.Application]::EnableVisualStyles()
 function loadnewmessages {
-C:/beanchat/recieve.bat
+Invoke-WebRequest -Uri http://internal.beanchat.tk:82/chat.txt -OutFile C:\beanchat\chat.txt
 $recentmessages = (gc C:\beanchat\chat.txt | select-object -last 16) | Out-String
 $Form                            = New-Object system.Windows.Forms.Form
 $Form.ClientSize                 = '400,400'
@@ -89,10 +83,9 @@ function checkusername {
 }
 function refresh {
 
-
-C:/beanchat/getmotd.bat
+Invoke-WebRequest -Uri http://internal.beanchat.tk:82/getmotd.txt -OutFile C:\beanchat\getmotd.txt
 loadnewmessages
-C:/beanchat/recieve.bat
+Invoke-WebRequest -Uri http://internal.beanchat.tk:82/recieve.txt -OutFile C:\beanchat\recieve.txt
 $recentmessages = (gc C:\beanchat\chat.txt | select-object -last 16) | Out-String
 $Form                            = New-Object system.Windows.Forms.Form
 $Form.ClientSize                 = '400,400'
@@ -200,7 +193,7 @@ $Form.Hide()
 
 }
 function scrollup($scrollammount) {
-C:/beanchat/recieve.bat
+Invoke-WebRequest -Uri http://internal.beanchat.tk:82/chat.txt -OutFile C:\beanchat\chat.txt
 $stream = [IO.File]::OpenWrite('C:\beanchat\chat.txt')
 $stream.SetLength($stream.Length - $scrollammount)
 $stream.Close()
@@ -216,7 +209,7 @@ $textboxcontents = $TextBox1.Text
 $afterusername = ": "
 $messagetosend = "$Env:beanchatusername$afterusername$textboxcontents"
 #$messagetosend = "$textboxcontents"
-C:/beanchat/recieve.bat
+Invoke-WebRequest -Uri http://internal.beanchat.tk:82/chat.txt -OutFile C:\beanchat\chat.txt
 $oldmessage = (gc C:\beanchat\chat.txt | select-object -last 40) | Out-String
 $path = "C:\beanchat\chat.txt"
 $outputfile = "$oldmessage$messagetosend"
@@ -230,7 +223,7 @@ $TextBox1.Text = ""
 function leave {
 $leavemessage = " has left the chat."
 $messagetosend = "$Env:beanchatusername$leavemessage"
-C:/beanchat/recieve.bat
+Invoke-WebRequest -Uri http://internal.beanchat.tk:82/chat.txt -OutFile C:\beanchat\chat.txt
 $oldmessage = (gc C:\beanchat\chat.txt | select-object -last 40) | Out-String
 $path = "C:\beanchat\chat.txt"
 $outputfile = "$oldmessage$messagetosend"
@@ -304,7 +297,7 @@ $Form.controls.Clear()
 
 $Form.controls.AddRange(@($TextBox1,$Label1,$refreshbutton,$Button1,$header,$lenny,$settingsbutton,$resetbutton))
 
-C:/beanchat/recieve.bat
+Invoke-WebRequest -Uri http://internal.beanchat.tk:82/chat.txt -OutFile C:\beanchat\chat.txt
 $recentmessages1 = (gc C:\beanchat\chat.txt | select-object -last 16) | Out-String
 $Label1.text                     = "$recentmessages1"
 })
